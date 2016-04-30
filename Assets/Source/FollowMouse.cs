@@ -44,10 +44,6 @@ public class FollowMouse : MonoBehaviour
         m_mousePosition.y = Mathf.Clamp(m_mousePosition.y, m_minMouseY, m_maxMouseY);
         m_mousePosition.x = Mathf.Clamp(m_mousePosition.x, m_minMouseX, m_maxMouseX);
 
-        transform.position = Vector3.Lerp(transform.position, m_mousePosition, Time.deltaTime * SPEED);
-
-
-
-
+        transform.position = Vector2.Lerp(transform.position, m_mousePosition, Time.deltaTime * SPEED);
     }
 }
