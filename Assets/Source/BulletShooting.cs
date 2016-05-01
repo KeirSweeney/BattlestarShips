@@ -65,30 +65,15 @@ public class BulletShooting : MonoBehaviour
             {
                 m_bullets[i].SetActive(true);
                 m_bullets[i].transform.parent = null;
-                StartCoroutine(BulletMovementActions(m_bullets[i],transform.position, new Vector2(transform.position.x, m_bulletDestroyYCoord), m_bulletSpeed));
+                m_bullets[i].GetComponent<BulletHandler>().StartBulletMovement(m_bullets[i], transform.position, new Vector2(transform.position.x, m_bulletDestroyYCoord), m_bulletSpeed, m_bulletDestroyYCoord);
+                //StartCoroutine(BulletMovementActions(m_bullets[i],transform.position, new Vector2(transform.position.x, m_bulletDestroyYCoord), m_bulletSpeed));
                 break;
             }
         }
         StartCoroutine(BulletFireActions());
     }
 
-    IEnumerator BulletMovementActions(GameObject bullet,Vector2 a, Vector2 b, float bulletDuration)
-    {
-        float step = (bulletDuration / (a - b).magnitude) * Time.fixedDeltaTime;
-        float t = 0;
-        while (t <= 1.0f)
-        {
-            t += step;
-            bullet.transform.position = Vector2.Lerp(a, b, t);
-            yield return new WaitForFixedUpdate();
-        }
-        bullet.transform.position = b;
-
-        if (bullet.transform.position.y == m_bulletDestroyYCoord)
-        {
-            bullet.GetComponent<BulletHandler>().ResetBullet();
-        }
-    }
+    
 
     
 }

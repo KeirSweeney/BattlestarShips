@@ -57,6 +57,7 @@ public abstract class EnemyShip : MonoBehaviour
         if(col.gameObject.tag == "Bullet") 
         {
             Debug.Log("Remove health");
+            col.GetComponent<BulletHandler>().StopAllCoroutines();
             col.GetComponent<BulletHandler>().ResetBullet();
             deductHealth(25);
         }
