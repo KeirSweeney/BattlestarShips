@@ -18,17 +18,12 @@ public abstract class EnemyShip : MonoBehaviour
 
     public abstract void updateShipMovement();
 
-    public virtual void setHealth(int health)
+    protected void setHealth(int health)
     {
         m_health = health;
-
-        if (m_health == 0)
-        {
-            destroyShip();
-        }
     }
 
-    public virtual void setSpeed(float speed)
+    protected void setSpeed(float speed)
     {
         m_speed = speed;
     }
@@ -42,17 +37,28 @@ public abstract class EnemyShip : MonoBehaviour
         }
     }
 
+    void deductHealth(int amountToDeduct)
+    {
+        m_health -= amountToDeduct;
+        if (m_health <= 0)
+        {
+            destroyShip();
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         //off screen trigger tag
-        /*if(col.tag == "adoahs;dlasd")
+        if(col.gameObject.tag == "OffScreenTrigger")
         { 
             destroyShip();
-        }*/
+        }
 
-        if(col.tag == "bullet") 
+        if(col.gameObject.tag == "Bullet") 
         {
-            setHealth(--m_health);
+            Debug.Log("Remove health");
+            col.GetComponent<BulletHandler>().ResetBullet();
+            deductHealth(25);
         }
         
     }

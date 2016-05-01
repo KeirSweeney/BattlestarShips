@@ -4,22 +4,18 @@ using System.Collections;
 public class BasicEnemyShip : EnemyShip 
 {
 
-	private const int HEALTH = 100;
-	private const float SPEED = 1.0f;
+	private const int SHIP_HEALTH = 100;
+	private const float SHIP_SPEED = 1.0f;
+
+    void Awake()
+    {
+        setHealth(SHIP_HEALTH);
+        setSpeed(SHIP_SPEED);
+    }
 
 	public override void updateShipMovement()
 	{
 		gameObject.transform.Translate(Vector2.down * Time.deltaTime);
 	}
 
-	public override void setHealth(int health)
-	{
-		base.setHealth(HEALTH);
-	}
-
-	public override void setSpeed(float speed)
-	{
-		base.setSpeed(SPEED);
-	}
-	
 }

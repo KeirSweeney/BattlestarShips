@@ -13,7 +13,7 @@ public class BulletShooting : MonoBehaviour
 
     private Camera camera;
 
-    private Vector2 m_topOfScreenY;
+    private Vector2 m_screenBoudsMax;
     private Bounds m_bulletPrefabBounds;
     private float m_bulletDestroyYCoord;
 
@@ -29,6 +29,7 @@ public class BulletShooting : MonoBehaviour
         for (int i = 0; i < MAXBULLETS; i++)
         {
             m_bullets[i] = Instantiate(m_bulletPrefab);
+            m_bullets[i].GetComponent<BulletHandler>().SetParent(gameObject);
             m_bullets[i].transform.SetParent(transform);
             m_bullets[i].transform.localPosition = Vector2.zero;
             m_bullets[i].SetActive(false);
@@ -41,10 +42,12 @@ public class BulletShooting : MonoBehaviour
         camera = Camera.main;
 
         StartCoroutine(BulletFireActions());
-        m_topOfScreenY = new Vector2(0, 1);
-        m_topOfScreenY = camera.ViewportToWorldPoint(m_topOfScreenY);
+        //m_topOfScreenY = new Vector2(0, 1);
+        m_screenBoudsMax = camera.BoundsMax();
         m_bulletPrefabBounds = m_bulletPrefab.GetComponent<SpriteRenderer>().bounds;
-        m_bulletDestroyYCoord = m_topOfScreenY.y + m_bulletPrefabBounds.max.y;
+
+
+        m_bulletDestroyYCoord = m_screenBoudsMax.y + m_bulletPrefabBounds.min.y / 2; // this is fucking up
     }
 	
 	// Update is called once per frame
@@ -76,15 +79,16 @@ public class BulletShooting : MonoBehaviour
         while (t <= 1.0f)
         {
             t += step;
-            bullet.transform.position = Vector3.Lerp(a, b, t);
+            bullet.transform.position = Vector2.Lerp(a, b, t);
             yield return new WaitForFixedUpdate();
         }
         bullet.transform.position = b;
 
-        if (bullet.transform.position.y == b.y)
+        if (bullet.transform.position.y == m_bulletDestroyYCoord)
         {
-            bullet.transform.SetParent(transform);
-            bullet.SetActive(false);
+            bullet.GetComponent<BulletHandler>().ResetBullet();
         }
     }
+
+    
 }
