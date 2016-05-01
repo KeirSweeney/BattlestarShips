@@ -15,7 +15,7 @@ public class BasicEnemyShip : EnemyShip
 
 	public override void updateShipMovement()
 	{
-		gameObject.transform.Translate(Vector2.down * Time.deltaTime);
+		gameObject.transform.Translate(Vector2.down * SHIP_SPEED * Time.fixedDeltaTime);
 	}
 
 }

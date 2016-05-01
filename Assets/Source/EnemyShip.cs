@@ -10,7 +10,6 @@ public abstract class EnemyShip : MonoBehaviour
     private int m_health;
     private float m_speed;
 
-
     void Update()
     {
         updateShipMovement();
@@ -59,7 +58,14 @@ public abstract class EnemyShip : MonoBehaviour
             Debug.Log("Remove health");
             col.GetComponent<BulletHandler>().StopAllCoroutines();
             col.GetComponent<BulletHandler>().ResetBullet();
-            deductHealth(25);
+            deductHealth(50);
+            GameManagerScript.Instance.IncrementScore(10);
+        }
+
+        if(col.gameObject.tag == "Player")
+        {
+            col.GetComponent<Player>().DeductHealth(10);
+            destroyShip();
         }
         
     }

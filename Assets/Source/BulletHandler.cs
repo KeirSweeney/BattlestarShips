@@ -4,7 +4,6 @@ using System.Collections;
 public class BulletHandler : MonoBehaviour
 {
     GameObject m_parentShip;
-
     
     public void SetParent(GameObject parent)
     {

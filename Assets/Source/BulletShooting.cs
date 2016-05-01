@@ -22,6 +22,11 @@ public class BulletShooting : MonoBehaviour
         InitBullets();
     }
 
+    void OnEnable()
+    {
+        StartCoroutine(BulletFireActions());
+    }
+
     void InitBullets()
     {
         m_bullets = new GameObject[MAXBULLETS];
@@ -42,20 +47,11 @@ public class BulletShooting : MonoBehaviour
         camera = Camera.main;
 
         StartCoroutine(BulletFireActions());
-        //m_topOfScreenY = new Vector2(0, 1);
         m_screenBoudsMax = camera.BoundsMax();
         m_bulletPrefabBounds = m_bulletPrefab.GetComponent<SpriteRenderer>().bounds;
-
-
-        m_bulletDestroyYCoord = m_screenBoudsMax.y + m_bulletPrefabBounds.min.y / 2; // this is fucking up
+        m_bulletDestroyYCoord = m_screenBoudsMax.y + m_bulletPrefabBounds.min.y / 2; 
     }
 	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
-
     IEnumerator BulletFireActions()
     {
         yield return new WaitForSeconds(Random.Range(m_minIntevalFireRate, m_maxIntevalFireRate));
@@ -65,15 +61,10 @@ public class BulletShooting : MonoBehaviour
             {
                 m_bullets[i].SetActive(true);
                 m_bullets[i].transform.parent = null;
-                m_bullets[i].GetComponent<BulletHandler>().StartBulletMovement(m_bullets[i], transform.position, new Vector2(transform.position.x, m_bulletDestroyYCoord), m_bulletSpeed, m_bulletDestroyYCoord);
-                //StartCoroutine(BulletMovementActions(m_bullets[i],transform.position, new Vector2(transform.position.x, m_bulletDestroyYCoord), m_bulletSpeed));
+                m_bullets[i].GetComponent<BulletHandler>().StartBulletMovement(m_bullets[i], new Vector2(transform.position.x ,transform.position.y + m_bulletPrefabBounds.min.y), new Vector2(transform.position.x, m_bulletDestroyYCoord), m_bulletSpeed, m_bulletDestroyYCoord);
                 break;
             }
         }
         StartCoroutine(BulletFireActions());
-    }
-
-    
-
-    
+    } 
 }

@@ -43,12 +43,10 @@ public class EnemyShipManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (UnityEngine.Random.Range(0,50) == 0)
+		if (UnityEngine.Random.Range(0,40) == 0)
 		{
 			Vector2 position = Camera.main.ScreenToWorldPoint(new Vector2(UnityEngine.Random.Range(0.0f, Screen.width), Screen.height));
 			m_enemyShips.Add(Instantiate(m_allShips[UnityEngine.Random.Range(0, m_allShips.Length)], position, Quaternion.identity) as EnemyShip);
 		}
-
-
 	}
 }
