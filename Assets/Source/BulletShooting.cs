@@ -9,13 +9,12 @@ public class BulletShooting : MonoBehaviour
     [SerializeField] private float m_bulletSpeed;
 
     private GameObject[] m_bullets;
-    private const int MAXBULLETS = 100;
-
     private Camera camera;
-
     private Vector2 m_screenBoudsMax;
     private Bounds m_bulletPrefabBounds;
     private float m_bulletDestroyYCoord;
+
+    private const int MAXBULLETS = 100;
 
     void Awake()
     {
@@ -41,12 +40,10 @@ public class BulletShooting : MonoBehaviour
         }
     }
 
-	// Use this for initialization
 	void Start ()
     {
         camera = Camera.main;
 
-        StartCoroutine(BulletFireActions());
         m_screenBoudsMax = camera.BoundsMax();
         m_bulletPrefabBounds = m_bulletPrefab.GetComponent<SpriteRenderer>().bounds;
         m_bulletDestroyYCoord = m_screenBoudsMax.y + m_bulletPrefabBounds.min.y / 2; 

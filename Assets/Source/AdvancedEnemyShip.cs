@@ -4,14 +4,17 @@ using System;
 
 public class AdvancedEnemyShip : EnemyShip
 {
-    private const int SHIP_HEALTH = 50;
+    [SerializeField] GameObject m_offScreenTrigger;
+
+    private const int SHIP_HEALTH = 100;
     private const float SHIP_SPEED = 1.5f;
 
     private Vector3 m_startPos;
-
-    [SerializeField] GameObject m_offScreenTrigger;
-    Vector3 m_triggerPos;
-
+    private Vector3 m_triggerPos;
+    private Vector3 m_riseRelCenter;
+    private Vector3 m_setRelCenter;
+    private Vector3 center;
+    private float m_fracComplete;
     private float m_startTime;
     private float m_journeyTime = 3.0F;
 
@@ -25,17 +28,18 @@ public class AdvancedEnemyShip : EnemyShip
     {
         m_startPos = transform.position;
         m_triggerPos = m_offScreenTrigger.transform.position;
+
         m_startTime = Time.time;
+        center = (m_startPos + m_triggerPos) * 0.5f;
+        center -= new Vector3(0, 1, 0);
     }
 
     public override void updateShipMovement()
     {
-        Vector3 center = (m_startPos + m_triggerPos) * 0.5f;
-        center -= new Vector3(0, 1, 0);
-        Vector3 riseRelCenter = m_startPos - center;
-        Vector3 setRelCenter = m_triggerPos - center;
-        float fracComplete = (Time.time - m_startTime) / m_journeyTime;
-        transform.position = Vector3.Slerp(riseRelCenter, setRelCenter, fracComplete);
+        m_riseRelCenter = m_startPos - center;
+        m_setRelCenter = m_triggerPos - center;
+        m_fracComplete = (Time.time - m_startTime) / m_journeyTime;
+        transform.position = Vector3.Slerp(m_riseRelCenter, m_setRelCenter, m_fracComplete);
         transform.position += center;
     }
 }

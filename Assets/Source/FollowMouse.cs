@@ -5,15 +5,12 @@ public class FollowMouse : MonoBehaviour
 {
     private Vector2 m_mousePosition;
     private Camera m_mainCamera;
-
-    //use of floats rather than Vector2's as Vector.x function is another process.
     private float m_minMouseY;
     private float m_maxMouseY;
     private float m_minMouseX;
     private float m_maxMouseX;
 
     private const float SPEED = 1.0f;
-
 
     void Awake()
     {
@@ -31,13 +28,6 @@ public class FollowMouse : MonoBehaviour
         m_maxMouseY = mousePos.y;
     }
 
-        // Use this for initialization
-        void Start ()
-    {
-	
-	}
-	
-	// Update is called once per frame
 	void Update ()
     {
         m_mousePosition = m_mainCamera.ScreenToWorldPoint(Input.mousePosition);

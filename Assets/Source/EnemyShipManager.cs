@@ -9,8 +9,6 @@ public class EnemyShipManager : MonoBehaviour
 
 	private List<EnemyShip> m_enemyShips;
 
-	   
-
 	void Awake()
 	{
 		m_enemyShips = new List<EnemyShip>();
@@ -18,13 +16,11 @@ public class EnemyShipManager : MonoBehaviour
 
 	void OnEnable()
 	{
-		//picks up the listener, call destroy ship with this.
 		EnemyShip.onDestroyEnemy += onDestroyShip;
 	}
 
 	void OnDisable()
 	{
-		//kill of the listener
 		EnemyShip.onDestroyEnemy -= onDestroyShip;
 	}
 
@@ -34,13 +30,6 @@ public class EnemyShipManager : MonoBehaviour
 		Destroy(enemyShip.gameObject);
 	}
 
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
-	
-	// Update is called once per frame
 	void Update () 
 	{
 		if (UnityEngine.Random.Range(0,40) == 0)

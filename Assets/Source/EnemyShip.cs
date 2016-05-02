@@ -27,7 +27,6 @@ public abstract class EnemyShip : MonoBehaviour
         m_speed = speed;
     }
 
-    //create an event 
     void destroyShip()
     {
         if (onDestroyEnemy != null)
@@ -47,7 +46,6 @@ public abstract class EnemyShip : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        //off screen trigger tag
         if(col.gameObject.tag == "OffScreenTrigger")
         { 
             destroyShip();
@@ -55,7 +53,6 @@ public abstract class EnemyShip : MonoBehaviour
 
         if(col.gameObject.tag == "Bullet") 
         {
-            Debug.Log("Remove health");
             col.GetComponent<BulletHandler>().StopAllCoroutines();
             col.GetComponent<BulletHandler>().ResetBullet();
             deductHealth(50);
@@ -67,6 +64,5 @@ public abstract class EnemyShip : MonoBehaviour
             col.GetComponent<Player>().DeductHealth(10);
             destroyShip();
         }
-        
     }
 }

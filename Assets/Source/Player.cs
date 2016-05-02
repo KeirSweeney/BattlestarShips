@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
 
     private int m_health;
 
-	// Use this for initialization
+    public int GetHealth() { return m_health; }
+
 	void Awake ()
     {
         m_health = 100;
